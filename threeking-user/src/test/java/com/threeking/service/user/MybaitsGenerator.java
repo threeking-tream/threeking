@@ -5,11 +5,14 @@ import com.baomidou.mybatisplus.core.toolkit.StringPool;
 import com.baomidou.mybatisplus.generator.AutoGenerator;
 import com.baomidou.mybatisplus.generator.InjectionConfig;
 import com.baomidou.mybatisplus.generator.config.*;
+import com.baomidou.mybatisplus.generator.config.builder.ConfigBuilder;
 import com.baomidou.mybatisplus.generator.config.po.TableInfo;
 import com.baomidou.mybatisplus.generator.config.rules.DateType;
+import com.baomidou.mybatisplus.generator.config.rules.FileType;
 import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
 import com.baomidou.mybatisplus.generator.engine.FreemarkerTemplateEngine;
 
+import java.io.File;
 import java.util.ArrayList;
 
 /**
@@ -32,8 +35,8 @@ public class MybaitsGenerator {
        gc.setAuthor("ah");
        gc.setOpen(false);
        gc.setSwagger2(true);
-       //是否覆盖
-       gc.setFileOverride(true);
+       //是否覆盖 一般选择false
+       gc.setFileOverride(false);
 
        gc.setDateType(DateType.ONLY_DATE);
 
@@ -64,7 +67,7 @@ public class MybaitsGenerator {
         pc.setParent("com.threeking.service");
         pc.setModuleName("user");
         //controller设置为空，则不生成controller
-        pc.setController("");
+        //pc.setController("");
         pc.setEntity("entity");
         return pc;
     }
@@ -79,6 +82,8 @@ public class MybaitsGenerator {
         sc.setNaming(NamingStrategy.underline_to_camel);
         sc.setColumnNaming(NamingStrategy.underline_to_camel);
         sc.setEntityLombokModel(true);
+        //sc.setEntityBuilderModel(true);
+        sc.setChainModel(true);
 
         //逻辑删除
         /**
@@ -89,7 +94,7 @@ public class MybaitsGenerator {
          *       logic-delete-value: 0 #逻辑已删除值（默认为1）
          *       logic-not-delete-value: 1 #逻辑已删除值（默认为0）
          */
-        sc.setLogicDeleteFieldName("data_status");
+        //sc.setLogicDeleteFieldName("data_status");
         sc.setRestControllerStyle(false);
         return sc;
     }
@@ -105,21 +110,45 @@ public class MybaitsGenerator {
                 // to do nothing
             }
         };
-        // 如果模板引擎是 freemarker
-        String templatePath = "/templates/mapper.xml.ftl";
-        // 如果模板引擎是 velocity
-        // String templatePath = "/templates/mapper.xml.vm";
-        // 自定义输出配置
-        ArrayList<FileOutConfig> foclist = new ArrayList<>();
+//        // 如果模板引擎是 freemarker
+//        String templatePath = "/templates/mapper.xml.ftl";
+//        // 如果模板引擎是 velocity
+//        // String templatePath = "/templates/mapper.xml.vm";
+//        // 自定义输出配置
+//        ArrayList<FileOutConfig> foclist = new ArrayList<>();
+//
+//        foclist.add(new FileOutConfig() {
+//            @Override
+//            public String outputFile(TableInfo tableInfo) {
+//                // 自定义输出文件名 ， 如果你 Entity 设置了前后缀、此处注意 xml 的名称会跟着发生变化！！
+//                return projectPath + "/src/main/resources/mapper/" + moduleName
+//                        + "/" + tableInfo.getEntityName() + "Mapper" + StringPool.DOT_XML;
+//            }
+//        });
 
-        foclist.add(new FileOutConfig() {
+
+        cfg.setFileCreate(new IFileCreate() {
             @Override
-            public String outputFile(TableInfo tableInfo) {
-                // 自定义输出文件名 ， 如果你 Entity 设置了前后缀、此处注意 xml 的名称会跟着发生变化！！
-                return projectPath + "/src/main/resources/mapper/" + moduleName
-                        + "/" + tableInfo.getEntityName() + "Mapper" + StringPool.DOT_XML;
+            public boolean isCreate(ConfigBuilder configBuilder, FileType fileType, String filePath) {
+
+                // 如果是Entity类型，直接放过输出文件
+                if(fileType == FileType.ENTITY){
+                    return true;
+                }
+                // 判断自定义文件夹是否需要创建
+//                checkDir("调用默认方法创建的目录，自定义目录用");
+//                if (fileType == FileType.MAPPER) {
+//                    // 已经生成 mapper 文件判断存在，不想重新生成返回 false
+//                    return !new File(filePath).exists();
+//                }
+                boolean exist = new File(filePath).exists();
+
+                //文件不存在或者全局配置的fileOverride为true才写文件
+                return !exist || configBuilder.getGlobalConfig().isFileOverride();
+
             }
         });
+
 
         return cfg;
     }
@@ -150,7 +179,7 @@ public class MybaitsGenerator {
         mpg.setPackageInfo(pc);
 
         //4. 自定义配置 还没弄明白
-//        mpg.setCfg(initInjectionConfig(pc.getModuleName()));
+        mpg.setCfg(initInjectionConfig(pc.getModuleName()));
         //5. 配置模板
         mpg.setTemplate(initTemplateConfig());
         mpg.setTemplateEngine(new FreemarkerTemplateEngine());

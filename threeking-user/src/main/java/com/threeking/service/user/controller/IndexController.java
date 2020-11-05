@@ -2,7 +2,6 @@ package com.threeking.service.user.controller;
 
 import com.alibaba.druid.pool.DruidDataSourceFactory;
 import com.threeking.service.user.entity.dto.UserVo;
-import com.threeking.service.user.mapper.UserInfoMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 //import org.springframework.cloud.context.config.annotation.RefreshScope;
@@ -31,8 +30,8 @@ public class IndexController {
     @Autowired
     JdbcTemplate jdbcTemplate;
 
-    @Autowired
-    UserInfoMapper userInfoMapper;
+//    @Autowired
+//    UserInfoMapper userInfoMapper;
 
     @Value("${common}")
     private String common;
@@ -69,6 +68,7 @@ public class IndexController {
     public String ccp(UserVo userVo)
     {
         ServletRequestAttributes requestAttributes = (ServletRequestAttributes)RequestContextHolder.getRequestAttributes();
+        assert requestAttributes != null;
         HttpServletRequest request = requestAttributes.getRequest();
 
         System.out.println(request.getQueryString());
@@ -92,7 +92,8 @@ public class IndexController {
 //
     @GetMapping("/getList")
     public Object getList(){
-        return userInfoMapper.selectList(null);
+        //return userInfoMapper.selectList(null);
+        return null;
     }
 
 

@@ -54,11 +54,16 @@
 <!--            <groupId>io.springfox</groupId>-->
 <!--            <artifactId>springfox-swagger2</artifactId>-->
 <!--        </dependency>-->
-        <dependency>
-            <groupId>com.github.xiaoymin</groupId>
-            <artifactId>swagger-bootstrap-ui</artifactId>
-            <version>1.9.6</version>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>com.github.xiaoymin</groupId>-->
+<!--            <artifactId>swagger-bootstrap-ui</artifactId>-->
+<!--            <version>1.9.6</version>-->
+<!--        </dependency>-->
+<!--        <dependency>-->
+<!--            <groupId>com.github.xiaoymin</groupId>-->
+<!--            <artifactId>knife4j-discovery-spring-boot-starter</artifactId>-->
+<!--            <version>1.0</version>-->
+<!--        </dependency>-->
         <!-- swagger2 end -->
         <dependency>
             <groupId>org.springframework.boot</groupId>

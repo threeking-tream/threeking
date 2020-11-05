@@ -2,9 +2,19 @@
 <project version="4">
   <component name="RemoteRepositoriesConfiguration">
     <remote-repository>
+      <option name="id" value="central" />
+      <option name="name" value="Central Repository" />
+      <option name="url" value="http://maven.fuqim.com/repository/maven-public/" />
+    </remote-repository>
+    <remote-repository>
       <option name="id" value="release" />
       <option name="name" value="Release Repository" />
       <option name="url" value="http://192.168.110.247:8081/repository/fqm-release/" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="release" />
+      <option name="name" value="Release Repository" />
+      <option name="url" value="http://maven.fuqim.com/repository/fqm-release/" />
     </remote-repository>
     <remote-repository>
       <option name="id" value="central" />
