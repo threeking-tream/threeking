@@ -1,16 +1,13 @@
 package com.threeking.service.user.controller;
 
-import com.alibaba.druid.pool.DruidDataSourceFactory;
-import com.threeking.service.user.entity.dto.UserVo;
+import com.threeking.service.user.entity.dto.UserDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 //import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.web.HttpRequestHandler;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
@@ -55,17 +52,17 @@ public class IndexController {
         return "this is user server";
     }
     @GetMapping("/cp")
-    public String cp(UserVo userVo){
+    public String cp(UserDto userDto){
         ServletRequestAttributes requestAttributes = (ServletRequestAttributes)RequestContextHolder.getRequestAttributes();
         HttpServletRequest request = requestAttributes.getRequest();
 
         System.out.println(request.getQueryString());
-        System.out.println(userVo.toString());
+        System.out.println(userDto.toString());
         return "this nacos setting common : " + common;
     }
 
     @PostMapping("/ccp")
-    public String ccp(UserVo userVo)
+    public String ccp(UserDto userDto)
     {
         ServletRequestAttributes requestAttributes = (ServletRequestAttributes)RequestContextHolder.getRequestAttributes();
         assert requestAttributes != null;
@@ -73,7 +70,7 @@ public class IndexController {
 
         System.out.println(request.getQueryString());
 
-        return userVo.toString();
+        return userDto.toString();
     }
 
     @GetMapping("timeout")

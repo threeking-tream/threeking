@@ -13,7 +13,7 @@ import javax.validation.constraints.NotNull;
  */
 @Data
 @AllArgsConstructor
-public class UserVo {
+public class UserDto {
 
     @NotNull(message = "用户ID不能为空")
     @ApiModelProperty(value = "用户ID",allowEmptyValue = false,hidden = true)

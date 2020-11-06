@@ -1,17 +1,22 @@
 package com.threeking.service.user.controller;
 
+import cn.hutool.core.util.ObjectUtil;
 import com.alibaba.nacos.common.utils.StringUtils;
+import com.alibaba.spring.util.ObjectUtils;
 import com.threeking.service.user.common.APIResponse;
-import com.threeking.service.user.entity.dto.AccountVo;
+import com.threeking.service.user.entity.dto.AccountDto;
+import com.threeking.service.user.entity.dto.PhoneDto;
 import com.threeking.service.user.service.IUserInfoService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
+import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
+import java.util.List;
 
 /**
  * 用户注册
@@ -27,10 +32,31 @@ public class RegisterController {
     @Autowired
     IUserInfoService iUserInfoService;
 
-    @ApiOperation(value = "/accountRegister",notes = "账号密码注册方式",response = AccountVo.class)
+    @ApiOperation(value = "/accountRegister",notes = "账号密码注册方式",response = AccountDto.class)
     @PostMapping("/accountRegister")
-    public APIResponse accountRegister(@RequestBody AccountVo accountVo){
-        return iUserInfoService.accountRegister(accountVo);
+    public APIResponse accountRegister(@RequestBody AccountDto accountDto){
+        return iUserInfoService.accountRegister(accountDto);
+    }
+
+    @ApiOperation(value = "/phoneRegister", notes = "手机验证码注册", response = PhoneDto.class)
+    @PostMapping("/phoneRegister")
+    public APIResponse phoneRegister(@RequestBody @Valid PhoneDto phoneDto){
+        return APIResponse.successResp("注册成功");
+    }
+
+
+    @PostMapping("/testPhoneRegister")
+    public String testPhoneRegister(@RequestBody @Valid PhoneDto dto){
+
+//        if (result.hasErrors())
+//        {
+//            List<ObjectError> ls=result.getAllErrors();
+//            ls.forEach(e-> System.out.println(e.getDefaultMessage()));
+//            //默认返回第一个错误，大家可以根据需求定制
+//            return ls.get(0).getDefaultMessage();
+//        }
+        System.out.println(dto.toString());
+        return "phoneRegister...";
     }
 
 }

@@ -3,7 +3,7 @@ package com.threeking.service.user.service;
 import com.threeking.service.user.common.APIResponse;
 import com.threeking.service.user.entity.UserInfo;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.threeking.service.user.entity.dto.AccountVo;
+import com.threeking.service.user.entity.dto.AccountDto;
 
 /**
  * <p>
@@ -15,6 +15,6 @@ import com.threeking.service.user.entity.dto.AccountVo;
  */
 public interface IUserInfoService extends IService<UserInfo> {
 
-    APIResponse accountRegister(AccountVo vo);
+    APIResponse accountRegister(AccountDto vo);
     Integer checkAccount(String account);
 }

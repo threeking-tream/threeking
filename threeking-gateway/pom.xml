@@ -59,11 +59,11 @@
 <!--            <artifactId>swagger-bootstrap-ui</artifactId>-->
 <!--            <version>1.9.6</version>-->
 <!--        </dependency>-->
-<!--        <dependency>-->
-<!--            <groupId>com.github.xiaoymin</groupId>-->
-<!--            <artifactId>knife4j-discovery-spring-boot-starter</artifactId>-->
-<!--            <version>1.0</version>-->
-<!--        </dependency>-->
+        <dependency>
+            <groupId>com.github.xiaoymin</groupId>
+            <artifactId>knife4j-spring-boot-starter</artifactId>
+            <version>3.0</version>
+        </dependency>
         <!-- swagger2 end -->
         <dependency>
             <groupId>org.springframework.boot</groupId>

@@ -16,13 +16,13 @@ import javax.validation.constraints.NotEmpty;
 @Setter
 @ToString
 @ApiModel(value = "AccountVo",description = "账号注册入参")
-public class AccountVo {
+public class AccountDto {
 
     @NotEmpty(message = "账号不能为空")
     @ApiModelProperty(value = "用户ID")
     private String account;
 
     @NotEmpty(message = "密码不能为空")
-    @ApiModelProperty(value = "用户ID")
+    @ApiModelProperty(value = "用户密码")
     private String password;
 }

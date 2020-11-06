@@ -1,7 +1,7 @@
 package com.threeking.service.user.controller;
 
 import com.threeking.service.user.common.APIResponse;
-import com.threeking.service.user.entity.dto.AccountVo;
+import com.threeking.service.user.entity.dto.AccountDto;
 import com.threeking.service.user.service.IUserInfoService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -22,9 +22,9 @@ public class UserController {
     @Autowired
     IUserInfoService iUserInfoService;
 
-    @ApiOperation(value = "/accountRegister",notes = "账号密码注册方式",response = AccountVo.class)
+    @ApiOperation(value = "/accountRegister",notes = "账号密码注册方式",response = AccountDto.class)
     @PostMapping("/accountRegister")
-    public APIResponse accountRegister(@RequestBody AccountVo accountVo){
-        return iUserInfoService.accountRegister(accountVo);
+    public APIResponse accountRegister(@RequestBody AccountDto accountDto){
+        return iUserInfoService.accountRegister(accountDto);
     }
 }

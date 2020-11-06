@@ -1,13 +1,10 @@
 package com.threeking.service.user.service.impl;
 
 import com.alibaba.nacos.common.utils.StringUtils;
-import com.baomidou.mybatisplus.core.conditions.AbstractWrapper;
-import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.conditions.segments.MergeSegments;
 import com.threeking.service.user.common.APIResponse;
 import com.threeking.service.user.entity.UserInfo;
-import com.threeking.service.user.entity.dto.AccountVo;
+import com.threeking.service.user.entity.dto.AccountDto;
 import com.threeking.service.user.mapper.UserInfoMapper;
 import com.threeking.service.user.service.IUserInfoService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -16,8 +13,6 @@ import com.threeking.service.user.utils.PwdGenerator;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.security.NoSuchAlgorithmException;
 
 /**
  * <p>
@@ -39,23 +34,24 @@ public class UserInfoServiceImpl extends ServiceImpl<UserInfoMapper, UserInfo> i
 
     /**
      * 账号密码注册方式
-     * @param vo
+     * @param dto
      * @return
      */
     @Override
-    public APIResponse accountRegister(AccountVo vo) {
+    public APIResponse accountRegister(AccountDto dto) {
         String userCode = idGenerator.simpleUUID();
         try {
-            if(checkAccount(vo.getAccount()) > 0){
+
+            if(checkAccount(dto.getAccount()) > 0){
                 return APIResponse.errorResp("账号已经存在");
             }
 
-            PwdGenerator.PwdAndSalt hexPassword = pwdGenerator.getHexPassword(vo.getPassword());
+            PwdGenerator.PwdAndSalt hexPassword = pwdGenerator.getHexPassword(dto.getPassword());
             UserInfo userInfo = new UserInfo()
                     .setUserCode(userCode)
-                    .setAccount(vo.getAccount())
-                    .setPhone(vo.getAccount())
-                    .setNikeName(vo.getAccount())
+                    .setAccount(dto.getAccount())
+                    .setPhone(dto.getAccount())
+                    .setNikeName(dto.getAccount())
                     .setPassword(hexPassword.getPassword())
                     .setPwdSalt(hexPassword.getSalt())
                     .setSex(0)
