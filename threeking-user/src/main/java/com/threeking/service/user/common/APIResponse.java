@@ -1,5 +1,6 @@
 package com.threeking.service.user.common;
 
+import com.alibaba.nacos.common.utils.StringUtils;
 import com.threeking.service.user.common.APIBaseResponse;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
@@ -87,6 +88,13 @@ public class APIResponse<T> extends APIBaseResponse {
         List<ObjectError> ls=bindingResult.getAllErrors();
         resp.setCode("1");
         resp.setMsg(ls.get(0).getDefaultMessage());
+        return resp;
+    }
+
+    public static <T> APIResponse<T> httpCodeResp(HttpCode httpCode){
+        APIResponse<T> resp = new APIResponse<T>();
+        resp.setCode(httpCode.getCode());
+        resp.setMsg(httpCode.getDesc());
         return resp;
     }
 }

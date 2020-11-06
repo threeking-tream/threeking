@@ -9,6 +9,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.NoSuchAlgorithmException;
+
 /**
  * @Author: A.H
  * @Date: 2020/11/2 15:28
@@ -24,7 +26,7 @@ public class UserController {
 
     @ApiOperation(value = "/accountRegister",notes = "账号密码注册方式",response = AccountDto.class)
     @PostMapping("/accountRegister")
-    public APIResponse accountRegister(@RequestBody AccountDto accountDto){
+    public APIResponse accountRegister(@RequestBody AccountDto accountDto) throws Exception {
         return iUserInfoService.accountRegister(accountDto);
     }
 }

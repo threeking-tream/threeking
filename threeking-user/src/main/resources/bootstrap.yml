@@ -21,3 +21,8 @@ spring:
     active: dev
 server:
   port: 6601
+
+
+wechat:
+  wcappid: 1233
+  wcappSecret: 432423423423423

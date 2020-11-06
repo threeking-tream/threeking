@@ -32,16 +32,16 @@ public class RegisterController {
     @Autowired
     IUserInfoService iUserInfoService;
 
-    @ApiOperation(value = "/accountRegister",notes = "账号密码注册方式",response = AccountDto.class)
+    @ApiOperation(value = "/accountRegister",notes = "账号密码注册方式")
     @PostMapping("/accountRegister")
-    public APIResponse accountRegister(@RequestBody AccountDto accountDto){
+    public APIResponse accountRegister(@RequestBody AccountDto accountDto) throws Exception{
         return iUserInfoService.accountRegister(accountDto);
     }
 
-    @ApiOperation(value = "/phoneRegister", notes = "手机验证码注册", response = PhoneDto.class)
+    @ApiOperation(value = "/phoneRegister", notes = "手机验证码注册")
     @PostMapping("/phoneRegister")
-    public APIResponse phoneRegister(@RequestBody @Valid PhoneDto phoneDto){
-        return APIResponse.successResp("注册成功");
+    public APIResponse phoneRegister(@RequestBody @Valid PhoneDto phoneDto) throws Exception{
+        return iUserInfoService.phoneRegister(phoneDto);
     }
 
 
@@ -57,6 +57,17 @@ public class RegisterController {
 //        }
         System.out.println(dto.toString());
         return "phoneRegister...";
+    }
+
+
+    @PostMapping("/test1")
+    public void test1() throws Exception{
+      //to do something
+        iUserInfoService.test();
+    }
+    @PostMapping("/test2")
+    public void test2() throws Exception{
+        //to do something
     }
 
 }
