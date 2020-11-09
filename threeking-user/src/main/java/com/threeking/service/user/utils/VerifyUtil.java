@@ -8,6 +8,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 
 import static java.util.concurrent.TimeUnit.MINUTES;
+import static java.util.concurrent.TimeUnit.SECONDS;
 
 /**
  * 验证码相关工具
@@ -23,13 +24,13 @@ public class VerifyUtil {
     /**
      * 发送验证码
      */
-    public boolean sendVerifyCode(String phoneNo){
+    public String sendVerifyCode(String phoneNo){
 
-       String code = RandomUtil.randomString(4);
+        String code = RandomUtil.randomNumbers(4);
 
-        redisTemplate.opsForValue().set(Constants.RED_USER_VERIFY + phoneNo,code,Constants.SEND_VERIFY_INTERVAL , MINUTES);
+        redisTemplate.opsForValue().set(Constants.RED_USER_VERIFY + phoneNo,code,Constants.SEND_VERIFY_INTERVAL , SECONDS);
         //TODO:: 调用短信发送接口
-        return true;
+        return code;
     }
 
 

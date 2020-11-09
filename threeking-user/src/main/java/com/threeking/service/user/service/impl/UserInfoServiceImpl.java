@@ -1,5 +1,6 @@
 package com.threeking.service.user.service.impl;
 
+import cn.hutool.core.util.RandomUtil;
 import com.alibaba.druid.support.json.JSONUtils;
 import com.alibaba.nacos.common.utils.StringUtils;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
@@ -20,18 +21,22 @@ import com.threeking.service.user.utils.PwdGenerator;
 import com.threeking.service.user.utils.VerifyUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+import org.yaml.snakeyaml.serializer.Serializer;
 import springfox.documentation.spring.web.json.Json;
 
 import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.concurrent.TimeUnit;
 
 /**
  * <p>
@@ -44,6 +49,13 @@ import java.util.Objects;
 @Slf4j
 @Service
 public class UserInfoServiceImpl extends ServiceImpl<UserInfoMapper, UserInfo> implements IUserInfoService {
+
+    @Autowired
+    RedisTemplate<String, Object> redisTemplate;
+
+    @Autowired
+    StringRedisTemplate stringRedisTemplate;
+
 
     @Autowired
     RestTemplate restTemplate;
@@ -144,6 +156,16 @@ public class UserInfoServiceImpl extends ServiceImpl<UserInfoMapper, UserInfo> i
 
     @Override
     public void test(){
+        String validateCode = String.valueOf(RandomUtil.randomString(6));
+
+        String verify = verifyUtil.sendVerifyCode("1332333333");
+        System.out.println(verify);
+        stringRedisTemplate.opsForValue().set("1332333333",
+                validateCode,
+                200,
+                TimeUnit.SECONDS);
+
+        redisTemplate.opsForValue().set("222222",verify,60,TimeUnit.SECONDS);
         System.out.println(wechatConfig.getWcappid());
         System.out.println(wechatConfig.getWcappSecret());
     }
