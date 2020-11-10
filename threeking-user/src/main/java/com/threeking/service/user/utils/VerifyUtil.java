@@ -38,14 +38,14 @@ public class VerifyUtil {
      * 校验验证码
      * 使用最简单的手机号验证
      */
-    public boolean checkVerifyCode(String phoneNo){
+    public boolean checkVerifyCode(String phoneNo,String verify){
 
         Object validateCodeCache = redisTemplate.opsForValue().get(Constants.RED_USER_VERIFY + phoneNo);
         if (ObjectUtil.isEmpty(validateCodeCache)) {
             return false;
         }
         assert validateCodeCache != null;
-        if(phoneNo.equals(validateCodeCache.toString())){
+        if(verify.equals(validateCodeCache.toString())){
             //验证成功即可删除
             redisTemplate.delete(Constants.RED_USER_VERIFY + phoneNo);
             return true;

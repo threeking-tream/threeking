@@ -19,21 +19,18 @@ spring:
             refresh: true
   profiles:
     active: dev
-  redis:
-    host: 192.168.110.160
-    port: 6379
-    database: 6
-    jedis:
-      pool:
-        max-active: 20
-        max-idle: 100
-        min-idle: 1
-        max-wait: 1000ms
 
 
 
 server:
   port: 6601
+
+#配置日志
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+
 
 
 wechat:

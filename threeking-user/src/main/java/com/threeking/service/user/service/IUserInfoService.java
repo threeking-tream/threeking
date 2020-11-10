@@ -36,5 +36,11 @@ public interface IUserInfoService extends IService<UserInfo> {
 
     Integer checkAccount(String account);
 
-    void test();
+    void test() throws InterruptedException;
+
+
+    APIResponse loginWithPhone(PhoneDto phoneDto) throws InterruptedException;
+
+    APIResponse loginWithAccount(AccountDto dto) throws InterruptedException;
+
 }
