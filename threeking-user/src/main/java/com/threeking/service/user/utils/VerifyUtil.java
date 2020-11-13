@@ -7,6 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 
+import javax.validation.Valid;
+import javax.validation.ValidationException;
+
 import static java.util.concurrent.TimeUnit.MINUTES;
 import static java.util.concurrent.TimeUnit.SECONDS;
 
@@ -21,10 +24,17 @@ public class VerifyUtil {
     @Autowired
     RedisTemplate<String, String> redisTemplate;
 
+    @Autowired
+    ValidUtil validUtil;
+
     /**
      * 发送验证码
      */
     public String sendVerifyCode(String phoneNo){
+
+        if(!validUtil.checkPhone(phoneNo)){
+            throw new ValidationException("手机号有误");
+        }
 
         String code = RandomUtil.randomNumbers(4);
 

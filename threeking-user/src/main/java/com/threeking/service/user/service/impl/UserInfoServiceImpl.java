@@ -166,6 +166,12 @@ public class UserInfoServiceImpl extends ServiceImpl<UserInfoMapper, UserInfo> i
     }
 
     @Override
+    public String sendSmsVerify(String phoneNo){
+
+        return verifyUtil.sendVerifyCode(phoneNo);
+    }
+
+    @Override
     public void test() throws InterruptedException {
         //String validateCode = String.valueOf(RandomUtil.randomString(6));
 
@@ -247,7 +253,7 @@ public class UserInfoServiceImpl extends ServiceImpl<UserInfoMapper, UserInfo> i
     }
 
     @Override
-    public APIResponse loginWithPhone(PhoneDto dto) throws InterruptedException {
+    public APIResponse<LoginVo> loginWithPhone(PhoneDto dto) throws InterruptedException {
 
         //先验证验证码
         if(!verifyUtil.checkVerifyCode(dto.getPhone(),dto.getVerify())){

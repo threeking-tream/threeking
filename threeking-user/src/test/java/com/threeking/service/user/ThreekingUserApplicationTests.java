@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.List;
+import java.util.regex.Pattern;
 
 @SpringBootTest
 class ThreekingUserApplicationTests {
@@ -88,5 +89,30 @@ class ThreekingUserApplicationTests {
     @Test
     public void checkSelectOne(){
         iUserInfoService.checkAccount("aaaaa");
+    }
+
+
+    void checkPhone(String phoneNo){
+        String reg = "^1[\\d]{10}$";
+
+        Pattern pattern = Pattern.compile(reg);
+
+        if(Pattern.matches(reg, phoneNo)){
+            System.out.println(phoneNo+ "正确");
+        }
+        else {
+            System.out.println(phoneNo+ "错误");
+        }
+    }
+
+    @Test
+    void regixTest(){
+
+        String phone = "13211112525";
+
+        checkPhone("13211112525");
+        checkPhone("23211112525");
+        checkPhone("11112525");
+
     }
 }

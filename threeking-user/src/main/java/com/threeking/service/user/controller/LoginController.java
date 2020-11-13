@@ -4,14 +4,15 @@ import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
 import com.threeking.service.user.common.APIResponse;
 import com.threeking.service.user.entity.dto.AccountDto;
 import com.threeking.service.user.entity.dto.PhoneDto;
+import com.threeking.service.user.entity.vo.LoginVo;
 import com.threeking.service.user.service.IUserInfoService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 /**
  * @Author: A.H
@@ -27,15 +28,21 @@ public class LoginController {
 
     @PostMapping("/login")
     @ApiOperationSupport()
-    public APIResponse login(@RequestBody PhoneDto phoneDto) throws Exception {
+    public APIResponse<LoginVo>  login(@RequestBody @Valid PhoneDto phoneDto) throws Exception {
 
-        return APIResponse.successResp(iUserInfoService.loginWithPhone(phoneDto));
+        return iUserInfoService.loginWithPhone(phoneDto);
     }
 
     @PostMapping("/accountLogin")
     @ApiOperationSupport()
-    public APIResponse accountLogin(@RequestBody AccountDto accountDto) throws Exception {
+    public APIResponse<LoginVo>  accountLogin(@RequestBody @Valid AccountDto accountDto) throws Exception {
 
-        return APIResponse.successResp(iUserInfoService.loginWithAccount(accountDto));
+        return iUserInfoService.loginWithAccount(accountDto);
+    }
+
+    @PostMapping("/sendVerify")
+    @ApiOperation(value = "/sendVerify",notes = "获取验证码")
+    public APIResponse<String> sendVerify(@RequestParam("phoneNo") String phoneNo){
+        return APIResponse.successResp(iUserInfoService.sendSmsVerify(phoneNo));
     }
 }

@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.NoHandlerFoundException;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.ValidationException;
 
 
 /**
@@ -26,10 +27,20 @@ public class GlobalControllerAdvice {
      * @return
      */
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public APIResponse<String> validExceptionHandler(MethodArgumentNotValidException ex){
+    public APIResponse<String> validArgumentExceptionHandler(MethodArgumentNotValidException ex){
         return APIResponse.errorResp(ex.getBindingResult());
     }
-
+    /**
+     * 拦截MethodArgumentNotValidException类型的错误
+     * 也就是我们定义Valid错误
+     * 也可以做一些其他的错误拦截器
+     * @param ex
+     * @return
+     */
+    @ExceptionHandler(ValidationException.class)
+    public APIResponse<String> validExceptionHandler(ValidationException ex){
+        return APIResponse.errorResp(ex.getMessage());
+    }
     /**
      * 处理运行异常
      */

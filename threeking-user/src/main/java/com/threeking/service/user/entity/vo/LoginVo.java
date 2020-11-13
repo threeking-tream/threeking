@@ -12,14 +12,18 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class LoginVo {
 
-    @ApiModelProperty(value = "用户编码")
-    private String userCode;
+//    @ApiModelProperty(value = "用户编码")
+//    private String userCode;
 
-    @ApiModelProperty(value = "用户账号")
-    private String account;
+//    @ApiModelProperty(value = "用户账号")
+//    private String account;
 
     @ApiModelProperty(value = "昵称")
     private String nikeName;
+
+    public String getPhone() {
+        return phone.replaceAll("(.{3})(.*)(.{3})","$1"+"*****" +"$3");
+    }
 
     @ApiModelProperty(value = "手机号")
     private String phone;

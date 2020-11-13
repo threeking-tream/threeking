@@ -5,6 +5,7 @@ import com.threeking.service.user.entity.UserInfo;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.threeking.service.user.entity.dto.AccountDto;
 import com.threeking.service.user.entity.dto.PhoneDto;
+import com.threeking.service.user.entity.vo.LoginVo;
 
 import java.security.NoSuchAlgorithmException;
 
@@ -38,9 +39,11 @@ public interface IUserInfoService extends IService<UserInfo> {
 
     void test() throws InterruptedException;
 
+    String sendSmsVerify(String phoneNo);
 
-    APIResponse loginWithPhone(PhoneDto phoneDto) throws InterruptedException;
 
-    APIResponse loginWithAccount(AccountDto dto) throws InterruptedException;
+    APIResponse<LoginVo>  loginWithPhone(PhoneDto phoneDto) throws InterruptedException;
+
+    APIResponse<LoginVo>  loginWithAccount(AccountDto dto) throws InterruptedException;
 
 }
