@@ -42,7 +42,7 @@ public class LoginController {
 
     @PostMapping("/sendVerify")
     @ApiOperation(value = "/sendVerify",notes = "获取验证码")
-    public APIResponse<String> sendVerify(@RequestParam("phoneNo") String phoneNo){
+    public APIResponse<String> sendVerify(@RequestParam(value = "phoneNo",required = false) String phoneNo){
         return APIResponse.successResp(iUserInfoService.sendSmsVerify(phoneNo));
     }
 }

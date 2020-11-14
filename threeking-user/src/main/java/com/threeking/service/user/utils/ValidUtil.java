@@ -1,5 +1,6 @@
 package com.threeking.service.user.utils;
 
+import com.alibaba.nacos.common.utils.StringUtils;
 import org.springframework.stereotype.Component;
 
 import java.util.regex.Pattern;
@@ -12,6 +13,10 @@ import java.util.regex.Pattern;
 public class ValidUtil {
 
     public boolean checkPhone(String phone){
+
+        if(StringUtils.isEmpty(phone)){
+            return false;
+        }
         String reg = "^1[\\d]{10}$";
 
         return Pattern.matches(reg,phone);
