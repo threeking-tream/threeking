@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import java.lang.reflect.Field;
 import java.net.URLEncoder;
@@ -32,17 +33,21 @@ public class AuthService {
      * @return
      */
     public String getQueryUserInfo(String code){
+        try {
+            //TODO: 根据code从redis或者数据库中获取用户信息
 
-        //TODO: 根据code从redis或者数据库中获取用户信息
+            //测试
+            UserInfo userInfo = new UserInfo();
+            userInfo.setUserId("123");
+            userInfo.setUserName("奥特曼打小怪兽");
 
-        //测试
-        UserInfo userInfo = new UserInfo();
-        userInfo.setUserId("123");
-        userInfo.setUserName("奥特曼打小怪兽");
+            log.info(userInfo.toString());
+            return userInfo.toQuery();
 
-        log.info(userInfo.toString());
-        return userInfo.toQuery();
-
+        }catch (Exception e){
+            log.error("获取用户信息时出错："+e.getMessage());
+            return null;
+        }
     }
 
 
@@ -58,17 +63,17 @@ public class AuthService {
          * 重写一下toString方案，使其返回&参数拼接的字符串，方便使用
          * @return
          */
-        public String toQuery(){
+        public String toQuery() throws IllegalAccessException {
 
-            String query = "userId" +
-                    '=' +
-                    this.getUserId() +
-                    '&' +
-                    "userName" +
-                    '=' +
-                    this.getUserName();
+            StringBuilder query = new StringBuilder();
             // 注意一定要使用URLEncoder.encode转码，否则传值会有编码问题
-            return URLEncoder.encode(query, StandardCharsets.UTF_8);
+            for(Field field : this.getClass().getDeclaredFields()){
+                query.append(field.getName());
+                query.append('=');
+                query.append(URLEncoder.encode((String) field.get(this), StandardCharsets.UTF_8));
+                query.append('&');
+            }
+            return query.deleteCharAt(query.length()-1).toString();
         }
     }
 

@@ -296,8 +296,10 @@ public class UserInfoServiceImpl extends ServiceImpl<UserInfoMapper, UserInfo> i
         //将Key缓存起来
         redisTemplate.opsForValue().set(strToken, user.getId(), cacheTime,TimeUnit.DAYS);
 
+        stringRedisTemplate.opsForValue().set("str"+strToken, user.getId().toString(), cacheTime,TimeUnit.DAYS);
         //将用户登录信息缓存起来
         redisTemplate.opsForValue().set(loginSessionKey,user,cacheTime, TimeUnit.DAYS);
+        stringRedisTemplate.opsForValue().set("str"+loginSessionKey, user.toString(), cacheTime,TimeUnit.DAYS);
 
 
         return strToken;

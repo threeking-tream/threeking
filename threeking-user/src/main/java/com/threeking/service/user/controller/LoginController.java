@@ -28,6 +28,7 @@ public class LoginController {
 
     @PostMapping("/login")
     @ApiOperationSupport()
+    @ApiOperation(value = "/login",notes = "手机验证码登录")
     public APIResponse<LoginVo>  login(@RequestBody @Valid PhoneDto phoneDto) throws Exception {
 
         return iUserInfoService.loginWithPhone(phoneDto);
@@ -35,6 +36,7 @@ public class LoginController {
 
     @PostMapping("/accountLogin")
     @ApiOperationSupport()
+    @ApiOperation(value = "/accountLogin",notes = "账号密码登录")
     public APIResponse<LoginVo>  accountLogin(@RequestBody @Valid AccountDto accountDto) throws Exception {
 
         return iUserInfoService.loginWithAccount(accountDto);

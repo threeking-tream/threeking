@@ -39,31 +39,7 @@ public class AuthGlobalFilter implements GlobalFilter, Ordered {
             hostAddress=iplist.get(0);
         }
         exchange.getRequest().mutate().header("realIp", hostAddress).build();
-//        List<String> authorizationHeader = exchange.getRequest().getHeaders().get("open-authorization");
-//        ServerHttpRequest host = null;
-//        if (authorizationHeader != null && authorizationHeader.size() > 0) {
-//            exchange.getRequest().mutate().header("realIp", hostAddress).header("Authorization", authorizationHeader.get(0)).build();
-//        } else {
-//            exchange.getRequest().mutate().header("realIp", hostAddress).build();
-//        }
-//        StringBuilder query = new StringBuilder();
-//        query.append("userId");
-//        query.append('=');
-//        query.append("ah");
-//
-//        URI newUri = UriComponentsBuilder.fromUri(exchange.getRequest().getURI())
-//                .replaceQuery(query.toString())
-//                .build(true)
-//                .toUri();
-//
-//        ServerHttpRequest newrequest = exchange.getRequest().mutate().uri(newUri).build();
-//        return chain.filter(exchange.mutate().request(newrequest).build());
-//        String token = request.getQueryParams().getFirst("token");
-//        if(!StringUtils.equals("admin",token)){
-//            log.info("认证失败...");
-//            exchange.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED);
-//            return exchange.getResponse().setComplete();
-//        }
+
         //放行
         return chain.filter(exchange);
     }

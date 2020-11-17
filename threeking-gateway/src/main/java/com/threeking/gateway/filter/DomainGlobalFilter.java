@@ -9,6 +9,7 @@ import org.springframework.cloud.gateway.filter.GlobalFilter;
 import org.springframework.cloud.gateway.support.ServerWebExchangeUtils;
 import org.springframework.core.Ordered;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
@@ -18,6 +19,7 @@ import reactor.core.publisher.Mono;
 
 
 import java.net.URI;
+import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 
 /**
@@ -55,9 +57,18 @@ public class DomainGlobalFilter implements GlobalFilter, Ordered {
             }
         }
         // 模拟从前端获取到的用户标识，可以是token，session，或者其他约定的参数
-        String token = "123";
+        String token = exchange.getRequest().getHeaders().getFirst("token");
+        if(StringUtils.isEmpty(token)){
+            exchange.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED);
+            return exchange.getResponse().setComplete();
+        }
+        String strInfo = authService.getQueryUserInfo(token);
+        if(StringUtils.isEmpty(strInfo)){
+            exchange.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED);
+            return exchange.getResponse().setComplete();
+        }
         // 从身份类里面获取用户信息
-        query.append(authService.getQueryUserInfo(token));
+        query.append(strInfo);
 
         try {
             URI newUri = UriComponentsBuilder.fromUri(uri).replaceQuery(query.toString()).encode(StandardCharsets.UTF_8).build(true).toUri();

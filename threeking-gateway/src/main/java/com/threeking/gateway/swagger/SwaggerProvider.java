@@ -18,7 +18,7 @@ import java.util.*;
 @Component
 @Primary
 @AllArgsConstructor
-public class Swagger3Provider implements SwaggerResourcesProvider {
+public class SwaggerProvider implements SwaggerResourcesProvider {
 
     public static final String API_URI = "/v2/api-docs";
 
