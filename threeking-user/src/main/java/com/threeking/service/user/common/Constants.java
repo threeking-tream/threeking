@@ -19,7 +19,7 @@ public interface Constants {
     int TIME_CACHE_USER = 1;
 
     // 用户登录信息保存实体前缀
-    String RED_USER_LOGIN_SESSION = "SESSION_";
+    String RED_USER_LOGIN_SESSION = "red_user_login_session_";
 
 
     //endregion

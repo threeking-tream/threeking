@@ -8,6 +8,18 @@ spring:
         password: nacos
         server-addr: 127.0.0.1:8848
         username: nacos
+      config:
+        file-extension: yml
+        namespace: f9432bb6-6ba5-4f5a-998b-c2b2e7815528
+        group: DEFAULT_GROUP
+        extension-configs:
+          - data-id: common-config.yml
+            group: GLOBAL_GROUP  # 不指定默认为DEFAULT_GROUP
+            refresh: true
+          - data-id: database-config.yml
+            group: GLOBAL_GROUP
+            refresh: true
+
     gateway:
       discovery:
         locator:

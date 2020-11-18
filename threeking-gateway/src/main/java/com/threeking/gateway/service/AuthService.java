@@ -1,11 +1,17 @@
 package com.threeking.gateway.service;
 
 import ch.qos.logback.classic.spi.EventArgUtil;
+import com.alibaba.nacos.common.utils.JacksonUtils;
+import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import javassist.expr.NewArray;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
@@ -25,6 +31,12 @@ import java.util.Map;
 @Service
 public class AuthService {
 
+    final String RED_USER_LOGIN_SESSION = "red_user_login_session_";
+    @Autowired
+    RedisTemplate redisTemplate;
+
+    @Autowired
+    StringRedisTemplate stringRedisTemplate;
 
 
     /**
@@ -34,15 +46,16 @@ public class AuthService {
      */
     public String getQueryUserInfo(String code){
         try {
-            //TODO: 根据code从redis或者数据库中获取用户信息
+            //根据code从redis或者数据库中获取用户信息
+            String userId = stringRedisTemplate.opsForValue().get(code);
+            assert userId != null;
+            String loginSessionKey = RED_USER_LOGIN_SESSION + userId;
+            String session = stringRedisTemplate.opsForValue().get(loginSessionKey);
+            assert session != null;
+            UserInfo user = JacksonUtils.toObj(session, UserInfo.class);
 
-            //测试
-            UserInfo userInfo = new UserInfo();
-            userInfo.setUserId("123");
-            userInfo.setUserName("奥特曼打小怪兽");
-
-            log.info(userInfo.toString());
-            return userInfo.toQuery();
+            log.info(user.toString());
+            return user.toQuery();
 
         }catch (Exception e){
             log.error("获取用户信息时出错："+e.getMessage());
@@ -55,8 +68,10 @@ public class AuthService {
     @NoArgsConstructor
     public static class UserInfo{
 
+        @JsonProperty(value = "id")
         private String userId;
 
+        @JsonProperty(value = "nikeName")
         private String userName;
 
         /**

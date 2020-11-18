@@ -1,12 +1,12 @@
 package com.threeking.gateway.filter;
 
+import com.threeking.gateway.common.GlobalConst;
 import com.threeking.gateway.common.ManageExcludeConfig;
 import com.threeking.gateway.service.AuthService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
-import org.springframework.cloud.gateway.support.ServerWebExchangeUtils;
 import org.springframework.core.Ordered;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
@@ -57,7 +57,7 @@ public class DomainGlobalFilter implements GlobalFilter, Ordered {
             }
         }
         // 模拟从前端获取到的用户标识，可以是token，session，或者其他约定的参数
-        String token = exchange.getRequest().getHeaders().getFirst("token");
+        String token = exchange.getRequest().getHeaders().getFirst(GlobalConst.HEADER_KEY_TOKEN);
         if(StringUtils.isEmpty(token)){
             exchange.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED);
             return exchange.getResponse().setComplete();

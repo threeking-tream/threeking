@@ -2,6 +2,7 @@ package com.threeking.service.user.service.impl;
 
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.RandomUtil;
+import com.alibaba.nacos.common.utils.JacksonUtils;
 import com.alibaba.nacos.common.utils.MD5Utils;
 import com.alibaba.nacos.common.utils.StringUtils;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
@@ -294,13 +295,9 @@ public class UserInfoServiceImpl extends ServiceImpl<UserInfoMapper, UserInfo> i
         String loginSessionKey = Constants.RED_USER_LOGIN_SESSION + user.getId();
 
         //将Key缓存起来
-        redisTemplate.opsForValue().set(strToken, user.getId(), cacheTime,TimeUnit.DAYS);
-
-        stringRedisTemplate.opsForValue().set("str"+strToken, user.getId().toString(), cacheTime,TimeUnit.DAYS);
+        stringRedisTemplate.opsForValue().set(strToken, user.getId().toString(), cacheTime,TimeUnit.DAYS);
         //将用户登录信息缓存起来
-        redisTemplate.opsForValue().set(loginSessionKey,user,cacheTime, TimeUnit.DAYS);
-        stringRedisTemplate.opsForValue().set("str"+loginSessionKey, user.toString(), cacheTime,TimeUnit.DAYS);
-
+        stringRedisTemplate.opsForValue().set(loginSessionKey, JacksonUtils.toJson(user), cacheTime,TimeUnit.DAYS);
 
         return strToken;
     }
