@@ -12,7 +12,14 @@
     </option>
     <option name="ignoredFiles">
       <set>
+        <option value="$PROJECT_DIR$/kq-pay/pom.xml" />
+        <option value="$PROJECT_DIR$/server-common/pom.xml" />
+        <option value="$PROJECT_DIR$/service-common/pom.xml" />
+        <option value="$PROJECT_DIR$/threeking-spi/untitled/pom.xml" />
+        <option value="$PROJECT_DIR$/threeking-spi/wc-pay/pom.xml" />
+        <option value="$PROJECT_DIR$/threeking-spi/wx-pay/pom.xml" />
         <option value="$PROJECT_DIR$/untitled/pom.xml" />
+        <option value="$PROJECT_DIR$/wc-pay/pom.xml" />
       </set>
     </option>
   </component>
