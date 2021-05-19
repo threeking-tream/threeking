@@ -8,13 +8,12 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="threeking-user" />
-        <module name="threeking-gateway" />
         <module name="threeking-content" />
-        <module name="wx-pay" />
-        <module name="service-common" />
-        <module name="ali-pay" />
-        <module name="main-test" />
         <module name="kq-pay" />
+        <module name="threeking-gateway" />
+        <module name="ali-pay" />
+        <module name="service-common" />
+        <module name="main-test" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel target="11">

@@ -1,7 +1,11 @@
 package com.threeking.gateway.swagger;
 
+import com.google.common.base.Predicate;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.lang.Nullable;
+import springfox.documentation.RequestHandler;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.oas.annotations.EnableOpenApi;
 import springfox.documentation.service.ApiInfo;
@@ -27,6 +31,7 @@ public class SwaggerConfig {
         return new Docket(DocumentationType.OAS_30)
                 .apiInfo(apiInfo())
                 .select()
+                .apis(new SwaggerFilter())
                 .build()
                 .securitySchemes(security());
 
@@ -46,5 +51,13 @@ public class SwaggerConfig {
                 .version("1.0")
                 .contact(new Contact("Applaction",null,null))
                 .build();
+    }
+
+    static class SwaggerFilter implements Predicate<RequestHandler> {
+        @Override
+        public boolean apply(@Nullable RequestHandler requestHandler) {
+            assert requestHandler != null;
+            return requestHandler.findAnnotation(ApiOperation.class).isPresent();
+        }
     }
 }
